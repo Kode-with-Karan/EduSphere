@@ -1,0 +1,27 @@
+ContentPlatform/
+│
+├── main/
+│   ├── migrations/
+│   ├── templates/
+│   │   └── main/
+│   │       ├── home.html
+│   │       ├── about_us.html
+│   │       ├── audio_library.html
+│   │       ├── video_library.html
+│   │       ├── articles_blogs.html
+│   │       ├── categories.html
+│   │       ├── latest_updates.html
+│   │       ├── subscription.html
+│   │       ├── community.html
+│   │       ├── faq.html
+│   │       ├── contact_us.html
+│   │       └── downloads.html
+│   ├── views.py
+│   ├── models.py
+│   ├── urls.py
+│   └── admin.py
+│
+└── ContentPlatform/
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py

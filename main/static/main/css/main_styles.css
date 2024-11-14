@@ -1,0 +1,42 @@
+#education,#infrotainment{
+    display: none;
+}
+
+#entertainmentCheck:checked ~ #hnn{
+    color: red
+}
+
+.border_color{
+    border: 1px solid blue;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+#pageSelect>ul{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+#pageSelect>ul>li{
+    font-size: 20px;
+    margin: 10px;
+}
+
+
+#tabSelect>ul{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    background: #eaeaea;
+    width: fit-content;
+    margin: auto;
+    border-radius: 40px;
+    padding: 1px 13px;
+    align-items: center;
+}
+#tabSelect>ul>li{
+    font-size: 20px;
+    margin: 10px;
+
+}

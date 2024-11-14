@@ -1,0 +1,57 @@
+<!-- navbar.html -->
+<!-- ***** Header Area Start ***** -->
+{% load static %}
+<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <!-- ***** Logo Start ***** -->
+          <a href="index.html" class="logo" style="width:85px">
+            <img src="{% static 'main/images/logo.png' %}" alt="Chain App Dev">
+          </a>
+          <!-- ***** Logo End ***** -->
+          <!-- ***** Menu Start ***** -->
+          <ul class="nav">
+            <li class="scroll-to-section"><a href="{%url 'home' %}#top" class="active">Home</a></li>
+            <li class="scroll-to-section"><a href="{%url 'audio_library' %}">Audio Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'video_library' %}">Video Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'articles_blogs' %}">Text Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'community' %}">Discussion</a></li>
+            <!-- <li><div class="gradient-button"><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i> Sign In Now</a></div></li>  -->
+            {% if user.is_authenticated %}
+
+            {% if request.resolver_match.url_name == "profile" %}
+            <li>
+              <div class="gradient-button"><a href="{%url 'logout' %}"><i class="fa fa-sign-in-alt"></i> Logout </a>
+              </div>
+            </li>
+
+
+            {% else %}
+            <li>
+              <div class="gradient-button"><a href="{%url 'profile' %}"><i class="fa fa-sign-in-alt"></i> Profile</a>
+              </div>
+            </li>
+            {% endif %}
+            {% else %}
+            <li>
+              <div class="gradient-button"><a href="{%url 'login' %}"><i class="fa fa-sign-in-alt"></i> Sign In Now</a>
+              </div>
+            </li>
+            {% endif %}
+
+
+
+
+          </ul>
+          <a class='menu-trigger'>
+            <span>Menu</span>
+          </a>
+          <!-- ***** Menu End ***** -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- ***** Header Area End ***** -->
