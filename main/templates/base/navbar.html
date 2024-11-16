@@ -13,11 +13,12 @@
           <!-- ***** Logo End ***** -->
           <!-- ***** Menu Start ***** -->
           <ul class="nav">
-            <li class="scroll-to-section"><a href="{%url 'home' %}#top" class="active">Home</a></li>
-            <li class="scroll-to-section"><a href="{%url 'audio_library' %}">Audio Lib.</a></li>
-            <li class="scroll-to-section"><a href="{%url 'video_library' %}">Video Lib.</a></li>
-            <li class="scroll-to-section"><a href="{%url 'articles_blogs' %}">Text Lib.</a></li>
-            <li class="scroll-to-section"><a href="{%url 'category_list' %}">Discussion</a></li>
+
+            <li class="scroll-to-section"><a href="{%url 'home' %}#top" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+            <li class="scroll-to-section"><a href="{%url 'audio_library' %}" class="{% if request.resolver_match.url_name == 'audio_library' %}active{% endif %}" >Audio Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'video_library' %}" class="{% if request.resolver_match.url_name == 'video_library' %}active{% endif %}" >Video Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'articles_blogs' %}" class="{% if request.resolver_match.url_name == 'articles_blogs' %}active{% endif %}" >Text Lib.</a></li>
+            <li class="scroll-to-section"><a href="{%url 'category_list' %}" class="{% if request.resolver_match.url_name == 'category_list' %}active{% endif %}" >Discussion</a></li>
             <!-- <li><div class="gradient-button"><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i> Sign In Now</a></div></li>  -->
             {% if user.is_authenticated %}
 
