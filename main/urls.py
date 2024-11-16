@@ -23,4 +23,5 @@ urlpatterns = [
     path('forum/<int:category_id>/', views.thread_list, name='thread_list'),
     path('forum/thread/<int:thread_id>/', views.thread_detail, name='thread_detail'),
     path('forum/<int:category_id>/create_thread/', views.create_thread, name='create_thread'),
+
 ]

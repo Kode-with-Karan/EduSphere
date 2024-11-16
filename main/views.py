@@ -5,13 +5,48 @@ from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile,MediaUpload
 from .forms import UserProfileForm
-from django.http import HttpResponse
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
+# from django.http import HttpResponse
+# from django.core.files.storage import FileSystemStorage
+# from django.conf import settings
 from .forms import MediaUploadForm
 from django.core.paginator import Paginator
 from .models import Category, Thread, Post
-from .forms import ThreadForm, PostForm
+from .forms import ThreadForm, PostForm, MediaFilterForm
+from django.utils.timezone import now
+from datetime import timedelta
+
+def categories(request):
+    media_list = MediaUpload.objects.all()
+    form = MediaFilterForm(request.GET)  # Bind the form to GET data
+
+    if form.is_valid():
+        category = form.cleaned_data.get('category')
+        file_type = form.cleaned_data.get('file_type')
+        time_filter = form.cleaned_data.get('time_filter')
+
+        if category:
+            media_list = media_list.filter(category=category)
+        
+        
+        # if file_type:
+        #     if file_type == 'audio':
+        #         media_list = media_list.filter(audio_file__isnull=False)
+        #     elif file_type == 'text':
+        #         media_list = media_list.filter(text_file__isnull=False)
+        #     elif file_type == 'video':
+        #         media_list = media_list.filter(video_file__isnull=False)
+        
+        if time_filter == 'today':
+            media_list = media_list.filter(created_at__date=now().date())
+        elif time_filter == 'week':
+            media_list = media_list.filter(created_at__gte=now() - timedelta(days=7))
+        elif time_filter == 'month':
+            media_list = media_list.filter(created_at__gte=now() - timedelta(days=30))
+
+    return render(request, 'main/categories.html', {'form': form, 'media_list': media_list,"file_type":file_type})
+
+
+
 
 def category_list(request):
     categories = Category.objects.all()
@@ -137,11 +172,20 @@ def articles_blogs(request):
     page_obj = paginator.get_page(page_number) 
     return render(request, 'main/articles_blogs.html', {'medias': page_obj})
 
-def categories(request):
-    return render(request, 'main/categories.html')
+# def categories(request):
+#     media_list = MediaUpload.objects.all()  # Get all media items
+#     paginator = Paginator(media_list, 10)  # Show 10 items per page
+
+#     # Get the page number from the request GET parameters (defaults to 1 if not provided)
+#     page_number = request.GET.get('page', 1)
+#     page_obj = paginator.get_page(page_number) 
+#     return render(request, 'main/categories.html', {'medias': page_obj})
 
 def latest_updates(request):
-    return render(request, 'main/latest_updates.html')
+    education_media_list = MediaUpload.objects.filter(category = 'education').order_by('-created_at')[:10]  # Get all media items
+    entertainment_media_list = MediaUpload.objects.filter(category = 'entertainment').order_by('-created_at')[:10]  # Get all media items
+    infotainment_media_list = MediaUpload.objects.filter(category = 'infotainment').order_by('-created_at')[:10]  # Get all media items
+    return render(request, 'main/latest_updates.html', {'education_media_list': education_media_list,'infotainment_media_list':infotainment_media_list, 'entertainment_media_list':entertainment_media_list})
 
 def community(request):
     return render(request, 'main/community.html')

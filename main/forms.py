@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import UserProfile
 from .models import Thread, Post
-
+from .models import CATEGORY_CHOICES
 from .models import MediaUpload
 
 class MediaUploadForm(forms.ModelForm):
@@ -101,3 +101,31 @@ class PostForm(forms.ModelForm):
                 # 'rows': 4,                # Optional: Control the height of the textarea
             }),
         }
+
+
+class MediaFilterForm(forms.Form):
+    category = forms.ChoiceField(
+        choices=[('', 'All Categories')] + CATEGORY_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    file_type = forms.ChoiceField(
+        choices=[
+            ('', 'All Types'),
+            ('audio', 'Audio Files'),
+            ('text', 'Text Files'),
+            ('video', 'Video Files'),
+        ],
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    time_filter = forms.ChoiceField(
+        choices=[
+            ('', 'Any Time'),
+            ('today', 'Today'),
+            ('week', 'Last Week'),
+            ('month', 'Last Month'),
+        ],
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
