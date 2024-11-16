@@ -1,6 +1,7 @@
 # models.py
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -32,3 +33,32 @@ class MediaUpload(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Thread(models.Model):
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='threads')
+    title = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='thread_images/', blank=True, null=True)  # Add this field
+
+    def __str__(self):
+        return self.title
+
+class Post(models.Model):
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='posts')
+    content = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Post by {self.created_by} on {self.thread}"

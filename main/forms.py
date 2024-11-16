@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import UserProfile
+from .models import Thread, Post
 
 from .models import MediaUpload
 
@@ -73,3 +74,30 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Username')
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+
+
+class ThreadForm(forms.ModelForm):
+    class Meta:
+        model = Thread
+        fields = ['title', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'placeholder': 'Write your Title here...',
+                # 'class': 'form-control',  # Optional: Add additional CSS classes
+                # 'rows': 4,                # Optional: Control the height of the textarea
+            }),
+        }
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'placeholder': 'Write your comment here...',
+                # 'class': 'form-control',  # Optional: Add additional CSS classes
+                # 'rows': 4,                # Optional: Control the height of the textarea
+            }),
+        }

@@ -18,4 +18,9 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('logout/', views.logout_view, name='logout'), 
     path('upload/<str:category1>/<str:category2>/', views.upload_file, name='upload_file'),
+
+    path('forum/', views.category_list, name='category_list'),
+    path('forum/<int:category_id>/', views.thread_list, name='thread_list'),
+    path('forum/thread/<int:thread_id>/', views.thread_detail, name='thread_detail'),
+    path('forum/<int:category_id>/create_thread/', views.create_thread, name='create_thread'),
 ]

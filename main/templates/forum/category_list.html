@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block links %}
+<style>
+    #forum{
+        width: 80%;
+        margin: auto;
+    }
+
+    #forum_ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* Responsive columns */
+        gap: 16px;
+        /* Space between grid items */
+        list-style-type: none;
+        /* Remove default bullet points */
+        padding: 0;
+        /* Remove default padding */
+        /* margin: 20px 100px; */
+        /* Remove default margin */
+    }
+
+    #forum_ul>a>li {
+        /* background-color: #f4f4f4; */
+        /* Example background */
+        padding: 16px;
+        /* Add some padding */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+        text-align: justify;
+        border-radius: 10px;
+        border: 1px solid #0d6efd;
+        /* Center text */
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<br><br><br><br>
+<div id="forum">
+    <h1 style="text-align: center;margin: 20px 0 10px 0;">Forum</h1>
+    <p style="text-align: center;margin: 0 0 40px 0;">Our community-based support forums are a great place to learn, share, and help each other</p>
+    <ul id="forum_ul">
+        {% for category in categories %}
+        <a href="{{ category.id }}/">
+            <li>
+                <div>
+                    <h5 style="color: #0d6efd;">{{ category.name }}</h5>
+                    <p>{{ category.description }}</p>
+                </div>
+            </li>
+        </a>
+        {% endfor %}
+    </ul>
+    
+</div>
+
+{% endblock %}

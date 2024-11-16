@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block links %}
+<style>
+    #thread_list {
+        width: 80%;
+        margin: auto;
+    }
+
+    #thread_list>h1,#thread_list>p{
+
+        text-align: center;
+    }
+    #thread_list>a {
+
+        background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-align: center;
+        margin: auto;
+        width: fit-content;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    #thread_list_ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* Responsive columns */
+        gap: 16px;
+        /* Space between grid items */
+        list-style-type: none;
+        /* Remove default bullet points */
+        padding: 0;
+        justify-items: center;
+    }
+
+    #thread_list_ul>li {
+        /* background-color: #f4f4f4; */
+        /* Example background */
+        padding: 16px;
+        /* Add some padding */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+        text-align: center;
+        border-radius: 10px;
+        /* Center text */
+
+    }
+    #thread_list_ul>li>a {
+
+        background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-align: center;
+        margin: auto;
+        width: fit-content;
+        display: block;
+        /* margin-bottom: 20px; */
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<br><br><br><br>
+<div id="thread_list">
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+    <a href="create_thread/">Create Topic</a>
+    <ul id="thread_list_ul">
+        {% for thread in threads %}
+        <li>
+            {% if thread.image %}
+            <img src="{{ thread.image.url }}" alt="Thread Image" style="max-width: 200px;">
+            {% else %}
+            <img src="{% static 'main/images/default.png' %}" alt="Thread Image" style="max-width: 200px;">
+            {% endif %}
+            <h5>{{ thread.title }}</h5>
+            <p>{{ thread.created_at }}</p>
+            <a href="/forum/thread/{{ thread.id }}/">Open</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

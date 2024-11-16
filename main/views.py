@@ -1,6 +1,4 @@
-from django.shortcuts import render
-# accounts/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
@@ -12,6 +10,51 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .forms import MediaUploadForm
 from django.core.paginator import Paginator
+from .models import Category, Thread, Post
+from .forms import ThreadForm, PostForm
+
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'forum/category_list.html', {'categories': categories})
+
+def thread_list(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    threads = category.threads.all()
+    return render(request, 'forum/thread_list.html', {'category': category, 'threads': threads})
+
+def thread_detail(request, thread_id):
+    thread = get_object_or_404(Thread, id=thread_id)
+    posts = thread.posts.all()
+
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.thread = thread
+            post.created_by = request.user
+            post.save()
+            return redirect('thread_detail', thread_id=thread_id)
+    else:
+        form = PostForm()
+
+    return render(request, 'forum/thread_detail.html', {'thread': thread, 'posts': posts, 'form': form})
+
+def create_thread(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+
+    if request.method == 'POST':
+        form = ThreadForm(request.POST, request.FILES)  # Handle file uploads
+        print(request.FILES)
+        if form.is_valid():
+            thread = form.save(commit=False)
+            thread.category = category
+            thread.created_by = request.user
+            thread.save()
+            return redirect('thread_list', category_id=category.id)
+    else:
+        form = ThreadForm()
+
+    return render(request, 'forum/create_thread.html', {'category': category, 'form': form})
 
 
 
