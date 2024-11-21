@@ -1,5 +1,84 @@
 <!-- Scripts -->
 {% load static %}
+
+<script>
+    let products = document.getElementsByClassName('product');
+    console.log(products)
+
+ // Create the main div with class 'canva_showing' and id 'canva'
+ var canvaDiv = document.createElement("div");
+        canvaDiv.classList.add("canva_showing");
+        canvaDiv.id = "canva";
+        canvaDiv.style.display = "none";
+
+        // Create the 'canva_body' div
+        var canvaBodyDiv = document.createElement("div");
+        canvaBodyDiv.classList.add("canva_body");
+
+        // Create the 'close' div
+        var closeDiv = document.createElement("div");
+        closeDiv.classList.add("close");
+        closeDiv.id = "close_canva";
+
+        // Create the close icon (Font Awesome icon)
+        var closeIcon = document.createElement("i");
+        closeIcon.classList.add("fa", "fa-times");
+
+        // Append the icon to the close div
+        closeDiv.appendChild(closeIcon);
+
+        // Create the 'canva_frame' div
+        var canvaFrameDiv = document.createElement("div");
+        canvaFrameDiv.classList.add("canva_frame");
+
+        // Create the iframe element
+        var iframe = document.createElement("iframe");
+        iframe.id = "canva_frame";
+        iframe.src = "#"; // You can replace this with the actual source URL
+        iframe.frameBorder = "0";
+        iframe.width = "100%";
+        iframe.height = "100%";
+
+        // Append the iframe to the canva_frame div
+        canvaFrameDiv.appendChild(iframe);
+
+        // Append the close and canva_frame divs to the canva_body div
+        canvaBodyDiv.appendChild(closeDiv);
+        canvaBodyDiv.appendChild(canvaFrameDiv);
+
+        // Append the canva_body div to the main canvaDiv
+        canvaDiv.appendChild(canvaBodyDiv);
+
+        // Finally, append the entire structure to the body
+        document.body.appendChild(canvaDiv);
+
+    let canva = document.getElementById("canva");
+    closeDiv.addEventListener("click", function () {
+        canva.style.display = "none";
+        try {
+            iframe.src = "#";
+        } catch (error) {
+            
+        }
+    });
+
+    Array.prototype.forEach.call(products, function (product) {
+        product.addEventListener('click', function () {
+            // let img_url = (seat.getElementsByTagName("div")[0].getElementsByTagName("img")[0]);
+            // canva.style.display = "flex";
+            // canva_frame.src = img_url.getAttribute("src");
+            // product
+            let iframe = product.getElementsByClassName("product-grid")[0].getElementsByTagName("iframe")[0];
+            let canvaFrame = document.getElementById("canva_frame");
+            canvaFrame.src = iframe.src;
+            
+            canva.style.display = "flex";
+            console.log(iframe)
+        })
+    });
+
+</script>
+
 <script src="{% static 'main/js/main_js.js' %}"></script>
 
 <script src="{% static 'main/vendor/jquery/jquery.min.js' %}"></script>

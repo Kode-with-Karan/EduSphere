@@ -165,12 +165,12 @@ def video_library(request):
 
 def articles_blogs(request):
     media_list = MediaUpload.objects.all()  # Get all media items
-    paginator = Paginator(media_list, 10)  # Show 10 items per page
+    # paginator = Paginator(media_list, 10)  # Show 10 items per page
 
-    # Get the page number from the request GET parameters (defaults to 1 if not provided)
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number) 
-    return render(request, 'main/articles_blogs.html', {'medias': page_obj})
+    # # Get the page number from the request GET parameters (defaults to 1 if not provided)
+    # page_number = request.GET.get('page', 1)
+    # page_obj = paginator.get_page(page_number) 
+    return render(request, 'main/articles_blogs.html', {'medias': media_list})
 
 # def categories(request):
 #     media_list = MediaUpload.objects.all()  # Get all media items
@@ -212,7 +212,7 @@ def upload_file(request, category1, category2):
         form = MediaUploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()  # Save the uploaded files and other data
-            return redirect('upload_file',category1=category1, category2=category2)  # Redirect to a success page or another view
+            return redirect('profile')  # Redirect to a success page or another view
     else:
         form = MediaUploadForm(
             initial={
